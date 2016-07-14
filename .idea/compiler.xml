@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="anotther" />
+        <module name="ImpactRadiusAssignment" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="anotther" target="1.7" />
+      <module name="ImpactRadiusAssignment" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
