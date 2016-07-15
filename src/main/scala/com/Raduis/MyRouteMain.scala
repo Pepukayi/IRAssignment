@@ -6,17 +6,12 @@ package com.Raduis
 
 import java.io._
 
-import akka.actor.Status.Success
 import com.danielasfregola.twitter4s.TwitterClient
 import com.danielasfregola.twitter4s.entities.{AccessToken, ConsumerToken}
 import com.danielasfregola.twitter4s.entities.{HashTag, Tweet}
 
 import scala.io.StdIn._
 import scala.concurrent.ExecutionContext.Implicits.global
-
-
-
-
 
 object MyRouteMain  {
 
@@ -25,6 +20,7 @@ object MyRouteMain  {
   val AccessSecret = ""
   val ConsumerKey = ""
   val ConsumerSecret = ""
+
 
   def main(args: Array[String]) {
 
@@ -36,7 +32,7 @@ object MyRouteMain  {
 
     val user = readLine("Please enter the user name or ID of the twitter page you would like to analyse Hashtags tweets from: ".toUpperCase)
 
-    client.getUserTimelineForUser(screen_name = user, count = 200).map { tweets =>
+    val tweets = client.getUserTimelineForUser(screen_name = user, count = 200).map { tweets =>
       val topHashtags: Seq[((String, Int), Int)] = getTopHashtags(tweets).zipWithIndex
       val rankings = topHashtags.map { case ((entity, frequency), idx) => s"[${idx + 1}] $entity (found $frequency times)" }
       println(s"${user.toUpperCase}'S TOP HASHTAGS:")
@@ -46,6 +42,9 @@ object MyRouteMain  {
       writer.write(rankings.mkString("\n"))
       writer.close()
 
+      val writ = new PrintWriter(new File(user + "Tweets.txt"))
+      writ.write(tweets.mkString("\n"))
+      writ.close()
     }
   }
 
