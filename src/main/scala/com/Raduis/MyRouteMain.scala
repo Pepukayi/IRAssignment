@@ -16,10 +16,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 object MyRouteMain  {
 
   //insert your OAuth tokens and keys below
-  val Accesstoken = ""
-  val AccessSecret = ""
-  val ConsumerKey = ""
-  val ConsumerSecret = ""
+  val Accesstoken = "190575331-J5SJ7Tc9YBZnbuRzP6Stvjw0xvJwTO4ADIwaNU6M"
+  val AccessSecret = "2E9qL3ArhnxU5r1mxU6lTqLRPrXaK40A4qYhz5hV7cz8C"
+  val ConsumerKey = "fiXrjWdCPdYl7IqqSag3tjkLG"
+  val ConsumerSecret = "7JTD51VHxt3hV7OtyOe7Jfd0sXLrXsm3MnwpmR5pEwULSItY4S"
 
 
   def main(args: Array[String]) {
@@ -37,6 +37,9 @@ object MyRouteMain  {
       val rankings = topHashtags.map { case ((entity, frequency), idx) => s"[${idx + 1}] $entity (found $frequency times)" }
       println(s"${user.toUpperCase}'S TOP HASHTAGS:")
       println(rankings.mkString("\n"))
+
+      val me = client.getUserTimelineForUser(screen_name = user, count = 200)
+      me.foreach{println}
 
       val writer = new PrintWriter(new File(user + "s_top_hash_tags.txt"))
       writer.write(rankings.mkString("\n"))
